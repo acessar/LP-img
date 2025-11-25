@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bella Nails Studio - Nail Art de Luxo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400;500;600&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pearl-white: #FEFEFE;
+            --warm-white: #F9F7F4;
+            --rose-gold: #E8B4B8;
+            --deep-rose: #D4989C;
+            --nude-pink: #F2E8E8;
+            --soft-nude: #EDE4E4;
+            --deep-black: #1A1918;
+            --charcoal: #2C2B2A;
+            --soft-grey: #8B8680;
+            --whisper-grey: #F5F3F0;
+            --coral-accent: #FF6B8A;
+            --dusty-rose: #C4979B;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--pearl-white);
+            color: var(--deep-black);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Cursor personalizado */
+        .cursor {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--rose-gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.15s ease;
+            opacity: 0;
+        }
+
+        .cursor.active {
+            opacity: 1;
+        }
+
+        .cursor.hover {
+            width: 24px;
+            height: 24px;
+            background: rgba(232, 180, 184, 0.15);
+            border: 1px solid var(--rose-gold);
+        }
+
+        @media (max-width: 768px) {
+            .cursor {
+                display: none;
+            }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(254, 254, 254, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(232, 180, 184, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(8px, 1.5vw, 16px) clamp(20px, 5%, 60px);
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: clamp(6px, 1.2vw, 10px);
+        }
+
+        .logo-icon {
+            width: clamp(20px, 3vw, 28px);
+            height: clamp(20px, 3vw, 28px);
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 70%;
+            background: var(--rose-gold);
+            transform: translate(-50%, -50%);
+            border-radius: 50% 50% 50% 20%;
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            width: 20%;
+            height: 20%;
+            background: var(--pearl-white);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            font-weight: 300;
+            color: var(--deep-black);
+            letter-spacing: clamp(0.5px, 0.2vw, 1.5px);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--deep-black);
+            font-weight: 300;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--rose-gold);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--deep-black);
+            padding: 0.5rem;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 20px;
+            height: 2px;
+            background: var(--deep-black);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(254, 254, 254, 0.98);
+                backdrop-filter: blur(20px);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem clamp(20px, 5%, 60px);
+            }
+
+            nav a {
+                display: block;
+                padding: 0.8rem 0;
+                border-bottom: 1px solid rgba(232, 180, 184, 0.1);
+            }
+        }
+
+        /* Hero Section com Slider */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: clamp(80px, 12vw, 120px);
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide:nth-child(1) {
+            background-image: linear-gradient(rgba(232, 180, 184, 0.4), rgba(242, 232, 232, 0.4)),
+                             url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=800&fit=crop&crop=center');
+        }
+
+        .hero-slide:nth-child(2) {
+            background-image: linear-gradient(rgba(212, 152, 156, 0.4), rgba(237, 228, 228, 0.4)),
+                             url('https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=1200&h=800&fit=crop&crop=center');
+        }
+
+        .hero-slide:nth-child(3) {
+            background-image: linear-gradient(rgba(255, 107, 138, 0.3), rgba(196, 151, 155, 0.4)),
+                             url('https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=1200&h=800&fit=crop&crop=center');
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 clamp(20px, 5%, 40px);
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(4px, 1vw, 6px);
+            background: rgba(232, 180, 184, 0.08);
+            padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+            border-radius: 50px;
+            margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+            font-size: clamp(0.65rem, 1.4vw, 0.75rem);
+            font-weight: 400;
+            color: var(--rose-gold);
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(232, 180, 184, 0.15);
+        }
+
+        .hero-badge .nail-icon {
+            width: clamp(10px, 2vw, 14px);
+            height: clamp(10px, 2vw, 14px);
+            background: var(--rose-gold);
+            border-radius: 50% 50% 50% 20%;
+            position: relative;
+        }
+
+        .hero-badge .nail-icon::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            width: 30%;
+            height: 30%;
+            background: var(--pearl-white);
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: 200;
+            color: var(--deep-black);
+            margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+            letter-spacing: clamp(1px, 0.5vw, 3px);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--soft-grey);
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: clamp(1rem, 2.5vw, 1.5rem);
+            justify-content: center;
+        }
+
+        .hero-cta {
+            background: var(--deep-black);
+            color: var(--pearl-white);
+            border: none;
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 25, 24, 0.15);
+        }
+
+        .hero-cta-secondary {
+            background: transparent;
+            color: var(--deep-black);
+            border: 1px solid var(--rose-gold);
+        }
+
+        .hero-cta-secondary:hover {
+            background: var(--rose-gold);
+            color: var(--pearl-white);
+        }
+
+        @media (max-width: 768px) {
+            .hero-cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-cta {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 25, 24, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-container {
+            background: var(--pearl-white);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: clamp(2rem, 5vw, 3rem);
+            position: relative;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(26, 25, 24, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            padding-bottom: clamp(1rem, 2vw, 1.5rem);
+            border-bottom: 1px solid rgba(232, 180, 184, 0.1);
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 400;
+            color: var(--deep-black);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--soft-grey);
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--rose-gold);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: clamp(0.5rem, 1vw, 0.6rem);
+            color: var(--deep-black);
+            font-size: clamp(0.8rem, 1.6vw, 0.85rem);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: clamp(0.8rem, 1.8vw, 1rem);
+            background: var(--whisper-grey);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            color: var(--deep-black);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 1.6vw, 0.9rem);
+            font-weight: 300;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--rose-gold);
+            background: var(--pearl-white);
+            box-shadow: 0 0 0 3px rgba(232, 180, 184, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--soft-grey);
+        }
+
+        .form-group select option {
+            background: var(--pearl-white);
+            color: var(--deep-black);
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .submit-btn {
+            background: var(--rose-gold);
+            color: var(--pearl-white);
+            border: none;
+            padding: clamp(0.9rem, 2vw, 1rem) clamp(2rem, 4vw, 2.5rem);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 1.6vw, 0.9rem);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: var(--deep-rose);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232, 180, 184, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-container {
+                border-radius: 12px 12px 0 0;
+                max-height: calc(100vh - 20px);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-black);
+            color: rgba(254, 254, 254, 0.6);
+            text-align: center;
+            padding: clamp(2rem, 4vw, 2.5rem) clamp(20px, 5%, 60px);
+            border-top: 1px solid rgba(232, 180, 184, 0.1);
+            font-size: clamp(0.7rem, 1.4vw, 0.8rem);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(2rem, 4vw, 3rem);
+            margin-bottom: clamp(2rem, 4vw, 2.5rem);
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 400;
+            color: var(--rose-gold);
+            margin-bottom: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-size: clamp(0.8rem, 1.6vw, 0.85rem);
+            color: rgba(254, 254, 254, 0.7);
+            text-decoration: none;
+            line-height: 1.6;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--rose-gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: clamp(1rem, 2vw, 1.2rem);
+            margin-top: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .social-link {
+            width: clamp(35px, 7vw, 40px);
+            height: clamp(35px, 7vw, 40px);
+            background: rgba(232, 180, 184, 0.08);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--rose-gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--rose-gold);
+            color: var(--pearl-white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(232, 180, 184, 0.1);
+            padding-top: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--rose-gold);
+            color: var(--pearl-white);
+        }
+
+        /* Focus states */
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid var(--rose-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon"></div>
+                <div class="logo-text">BELLA NAILS STUDIO</div>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#contact" class="nav-contact">Contato</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active"></div>
+            <div class="hero-slide"></div>
+            <div class="hero-slide"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <div class="nail-icon"></div>
+                Nail Art de Luxo • São Paulo
+            </div>
+            <h1>UNHAS PERFEITAS</h1>
+            <p class="hero-subtitle">Transforme suas unhas em obras de arte com técnicas exclusivas e produtos premium. Cada unha é única, cada cliente especial.</p>
+            <div class="hero-cta-group">
+                <button class="hero-cta" id="openFormBtn">Agende seu Horário</button>
+                <a href="https://wa.me/5511996543210?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20no%20Bella%20Nails%20Studio." target="_blank" class="hero-cta hero-cta-secondary">Contatar via WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Contato -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Agende seu Horário</h2>
+                <button class="modal-close" id="closeFormBtn">&times;</button>
+            </div>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Nome *</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Sobrenome *</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Seu sobrenome" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">WhatsApp *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(11) 9 9999-9999" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="seu@email.com.br">
+                    </div>
+                </div>
+                
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="service">Serviço de Interesse *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Selecione um serviço</option>
+                            <option value="manicure">Manicure Clássica Premium</option>
+                            <option value="nailart">Nail Art Personalizada</option>
+                            <option value="gelpolish">Gel Polish Premium</option>
+                            <option value="alongamento">Alongamento de Unhas</option>
+                            <option value="pedicure">Pedicure Completa</option>
+                            <option value="tratamento">Tratamento Intensivo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="frequency">Frequência Atual</label>
+                        <select id="frequency" name="frequency">
+                            <option value="">Selecione</option>
+                            <option value="primeira">Primeira vez</option>
+                            <option value="semanal">Semanal</option>
+                            <option value="quinzenal">Quinzenal</option>
+                            <option value="mensal">Mensal</option>
+                            <option value="esporadica">Esporádica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Orçamento Mensal</label>
+                        <select id="budget" name="budget">
+                            <option value="">Selecione uma faixa</option>
+                            <option value="ate100">Até R$ 100</option>
+                            <option value="100a200">R$ 100 - R$ 200</option>
+                            <option value="200a300">R$ 200 - R$ 300</option>
+                            <option value="300a500">R$ 300 - R$ 500</option>
+                            <option value="acima500">Acima de R$ 500</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="preferences">Preferências e Observações</label>
+                        <textarea id="preferences" name="preferences" rows="3" placeholder="Conte-nos sobre seu estilo preferido, problemas específicos nas unhas, cores favoritas, etc."></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Enviar Solicitação via WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bella Nails Studio</h3>
+                <p>Nail art de luxo e cuidados premium para suas unhas. Transformando unhas em obras de arte desde 2016.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/5511996543210" target="_blank" class="social-link" title="WhatsApp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.60555 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>Rua Augusta, 2187 - Jardins</p>
+                <p>São Paulo - SP, CEP: 01413-000</p>
+                <a href="tel:11996543210">(11) 99654-3210</a>
+                <a href="mailto:contato@bellanailsstudio.com.br">contato@bellanailsstudio.com.br</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Horário de Funcionamento</h3>
+                <p>Segunda a Sexta: 9h às 19h</p>
+                <p>Sábados: 8h às 18h</p>
+                <p>Domingos: 10h às 16h</p>
+                <p>Feriados: Sob consulta</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bella Nails Studio. Todos os direitos reservados. | Nail Art de Luxo em São Paulo</p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== Cursor Personalizado =====
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.classList.add('active');
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.classList.remove('active');
+        });
+
+        function animateCursor() {
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover effects no cursor
+        const interactiveElements = document.querySelectorAll('a, button, .logo-container');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // ===== Hero Slider =====
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 4000);
+
+        // ===== Mobile Menu =====
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const nav = document.getElementById('nav');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            
+            const spans = mobileMenuToggle.querySelectorAll('span');
+            if (mobileMenuToggle.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '';
+                spans[2].style.transform = '';
+            }
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                nav.classList.remove('active');
+                const spans = mobileMenuToggle.querySelectorAll('span');
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '';
+                spans[2].style.transform = '';
+            });
+        });
+
+        // ===== Modal de Contato =====
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openFormBtn = document.getElementById('openFormBtn');
+        const closeFormBtn = document.getElementById('closeFormBtn');
+        const contactForm = document.getElementById('contactForm');
+
+        // Abrir modal
+        openFormBtn.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Fechar modal
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeFormBtn.addEventListener('click', closeModal);
+
+        // Fechar modal ao clicar no overlay
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Fechar modal com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // ===== Formulário de Contato =====
+        const phoneInput = document.getElementById('phone');
+
+        // Máscara de telefone
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                if (value.length <= 10) {
+                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                } else {
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                }
+            }
+            e.target.value = value;
+        });
+
+        // Envio do formulário
+        let lastSubmission = 0;
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Verificar spam
+            const now = Date.now();
+            if (now - lastSubmission < 3000) {
+                alert('Aguarde alguns segundos antes de enviar outra mensagem.');
+                return;
+            }
+            lastSubmission = now;
+
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+
+            // Validar campos obrigatórios
+            if (!data.firstName || !data.lastName || !data.phone || !data.service) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            // Preparar mensagem para WhatsApp
+            let message = `🌸 *Nova Solicitação - Bella Nails Studio* 🌸\n\n`;
+            message += `👋 *Nome:* ${data.firstName} ${data.lastName}\n`;
+            message += `📱 *WhatsApp:* ${data.phone}\n`;
+            if (data.email) message += `📧 *E-mail:* ${data.email}\n`;
+            message += `💅 *Serviço:* ${data.service}\n`;
+            if (data.frequency) message += `📅 *Frequência:* ${data.frequency}\n`;
+            if (data.budget) message += `💰 *Orçamento:* ${data.budget}\n`;
+            if (data.preferences) message += `✨ *Preferências:* ${data.preferences}\n`;
+            message += `\n🕐 *Enviado em:* ${new Date().toLocaleString('pt-BR')}\n`;
+            message += `\n_Mensagem enviada pelo site Bella Nails Studio_`;
+
+            const phoneNumber = '5511996543210';
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+
+            submitBtn.textContent = 'Redirecionando para WhatsApp...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+                submitBtn.textContent = '✅ Enviado! Aguarde nosso contato';
+
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    contactForm.reset();
+                    closeModal();
+                }, 3000);
+            }, 1000);
+        });
+
+        // ===== Header Scroll Effect =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+
+            if (scrolled > 50) {
+                header.style.background = 'rgba(254, 254, 254, 0.98)';
+                header.style.borderBottom = '1px solid rgba(232, 180, 184, 0.15)';
+            } else {
+                header.style.background = 'rgba(254, 254, 254, 0.95)';
+                header.style.borderBottom = '1px solid rgba(232, 180, 184, 0.08)';
+            }
+        });
+
+        // ===== Smooth Navigation =====
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.classList.contains('nav-contact')) return;
+                
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Efeito parallax sutil no hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSlides = document.querySelectorAll('.hero-slide');
+
+            heroSlides.forEach(slide => {
+                slide.style.transform = `translateY(${scrolled * 0.2}px)`;
+            });
+        });
+
+        // Log
+        console.log('🌸 Bella Nails Studio - Website carregado com sucesso! 💅');
+    </script>
+</body>
+
+</html>
